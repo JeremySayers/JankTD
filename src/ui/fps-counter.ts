@@ -15,7 +15,7 @@ class FpsCounter extends Entity {
     render(context: CanvasRenderingContext2D) {
         context.font = '14px Arial';
         context.fillStyle = 'white';
-        context.fillText("FPS: " + this.fps, 10, 20);
+        context.fillText("FPS: " + this.fps, 4, 15);
     }
 }
 

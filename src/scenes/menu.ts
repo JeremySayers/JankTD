@@ -25,7 +25,7 @@ class Menu extends Scene {
     }
 
     onClick(event: MouseEvent) {
-        if (Sandbox.mouseCollidedWithEntity(this.game.mouseX, this.game.mouseY, this.playButton)){
+        if (this.playButton.clicked(this.game)){
             this.game.nextScene();
         }
     }

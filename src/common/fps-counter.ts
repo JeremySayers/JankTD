@@ -1,4 +1,4 @@
-import Entity from "../common/entity";
+import Entity from "./entity";
 
 class FpsCounter extends Entity {
     private secondsPassed: number;

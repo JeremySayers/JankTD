@@ -16,9 +16,8 @@ class Scene {
     create() {}
     update(delta: number) {}
     render(context: CanvasRenderingContext2D) {}
-    onClick(event: MouseEvent) {
-
-    }
+    onClick(event: MouseEvent) {}
+    onMouseMove(event: MouseEvent) {}
 }
 
 export default Scene;

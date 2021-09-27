@@ -1,8 +1,6 @@
-import Entity from "./common/entity";
-import Sandbox from "./common/sandbox";
 import Scene from "./common/scene";
 import GameState from "./enums/game-state";
-import FpsCounter from "./ui/fps-counter";
+import FpsCounter from "./common/fps-counter";
 import Menu from "./scenes/menu";
 import Main from "./scenes/main";
 
@@ -34,6 +32,8 @@ export class Game {
         this.canvas.addEventListener('mousemove', (event: MouseEvent) => {
             this.mouseX = event.clientX - this.canvas.offsetLeft;
             this.mouseY = event.clientY - this.canvas.offsetTop;
+
+            this.scenes.map(scene => scene.onMouseMove(event))
         });
         
         this.canvas.addEventListener('click', (event: MouseEvent) => {

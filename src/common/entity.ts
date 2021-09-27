@@ -1,3 +1,4 @@
+import { Game } from "../index";
 import Sandbox from "./sandbox";
 
 class Entity {
@@ -9,7 +10,7 @@ class Entity {
 
     protected image: HTMLImageElement;
 
-    constructor(x?: number, y?: number, width?: number, height?: number, imagePath?: string) {
+    constructor(x?: number, y?: number, width?: number, height?: number, imagePath?: string, image?: HTMLImageElement) {
         this.id = Sandbox.uuid();
         this.x = x || 0;
         this.y = y || 0;
@@ -21,6 +22,9 @@ class Entity {
             console.log(`Debug: Loading image from ${imagePath}.`)
             Sandbox.loadImage(this.image, imagePath);
         }
+        else if (image != null) {
+            this.image = image;
+        }
     }
 
     update(delta: number) {}
@@ -31,7 +35,9 @@ class Entity {
         }
     }
 
-    onClick(event: MouseEvent){}
+    clicked(game: Game){
+        return Sandbox.mouseCollidedWithEntity(game.mouseX, game.mouseY, this);
+    }
 }
 
 export default Entity;

@@ -1,7 +1,9 @@
 import Entity from "../common/entity";
 import Sandbox from "../common/sandbox";
 import Scene from "../common/scene";
+import LightningTower from "../components/main/lightning-tower";
 import RangeIndicator from "../components/main/range-indicator";
+import Tower from "../components/main/tower";
 import { Game } from "../index";
 
 class Main extends Scene {  
@@ -12,8 +14,7 @@ class Main extends Scene {
     private lightningTowerImage: HTMLImageElement = new Image();
 
     private isTowerCurrentlyBeingPlaced: boolean = false;
-    private towerCurrentlyBeingPlaced: Entity;
-    private activeRangeIndicator: Entity;
+    private towerCurrentlyBeingPlaced: Tower;
 
     create() {
         Sandbox.loadImage(this.lightningTowerImage, "assets/lightning_tower.png");
@@ -37,11 +38,12 @@ class Main extends Scene {
 
     onClick(event: MouseEvent) {
         if (this.isTowerCurrentlyBeingPlaced) {
+            this.towerCurrentlyBeingPlaced.hideRangeIndicator();
+
             this.isTowerCurrentlyBeingPlaced = false;
             this.towerCurrentlyBeingPlaced = null;
             this.game.canvas.style.cursor = "default";
-            this.entities.splice(this.entities.findIndex(entity => entity === this.activeRangeIndicator), 1);
-            
+
             return;
         }
 
@@ -49,11 +51,9 @@ class Main extends Scene {
             this.isTowerCurrentlyBeingPlaced = true;
             this.game.canvas.style.cursor = "none";
 
-            this.towerCurrentlyBeingPlaced = new Entity(this.game.mouseX - 16, this.game.mouseY - 16, 32, 32, null, this.lightningTowerImage);
-            this.activeRangeIndicator = new RangeIndicator(this.towerCurrentlyBeingPlaced.x + 16, this.towerCurrentlyBeingPlaced.y + 16);            
-
+            this.towerCurrentlyBeingPlaced = new LightningTower(this.game.mouseX - 16, this.game.mouseY - 16, this.lightningTowerImage);    
+            this.towerCurrentlyBeingPlaced.showRangeIndicator();
             this.entities.push(this.towerCurrentlyBeingPlaced);
-            this.entities.push(this.activeRangeIndicator);
         }
     }
 
@@ -61,8 +61,6 @@ class Main extends Scene {
         if (this.isTowerCurrentlyBeingPlaced) {            
             this.towerCurrentlyBeingPlaced.x = event.clientX - this.game.canvas.offsetLeft - 16;
             this.towerCurrentlyBeingPlaced.y = event.clientY - this.game.canvas.offsetTop - 16;
-            this.activeRangeIndicator.x = this.towerCurrentlyBeingPlaced.x + 16;
-            this.activeRangeIndicator.y = this.towerCurrentlyBeingPlaced.y + 16;
         }
     }
 }

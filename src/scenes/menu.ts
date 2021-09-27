@@ -6,7 +6,7 @@ class Menu extends Scene {
     private playButton: Entity;
     private background: Entity;
 
-    create() {        
+    create() {
         this.background = new Entity(0, 0, 800, 480, "assets/menu.png");
         this.playButton = new Entity((this.game.canvas.width / 2) - (164 / 2), 320, 164, 82, "assets/play_button.png");
         

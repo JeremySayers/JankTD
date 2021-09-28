@@ -1,9 +1,8 @@
 enum GameState {
-    Loading,
-    Menu,
-    Playing,
+    PreRound,
+    Round,
     Pause,
-    End,
+    Over
 }
 
 export default GameState;

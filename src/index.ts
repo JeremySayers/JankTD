@@ -1,5 +1,4 @@
 import Scene from "./common/scene";
-import GameState from "./enums/game-state";
 import FpsCounter from "./common/fps-counter";
 import Menu from "./scenes/menu";
 import Main from "./scenes/main";
@@ -9,13 +8,12 @@ export class Game {
     private context: CanvasRenderingContext2D;
     private scenes: Scene[];
     private activeScene: Scene;
-    private gameState: GameState;
     private fpsCounter: FpsCounter;
     mouseX: number = 0;
     mouseY: number = 0;
+    private oldTimeStamp = 0;
 
     constructor() {
-        this.gameState = GameState.Loading;
         this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
         this.context = this.canvas.getContext("2d");
         this.fpsCounter = new FpsCounter();
@@ -43,17 +41,19 @@ export class Game {
         window.requestAnimationFrame(this.loop);
     }
 
-    loop = (delta: number) => {
+    loop = (timestamp: number) => {
+        const delta = (timestamp - this.oldTimeStamp) / 1000;
+        this.oldTimeStamp = timestamp;
         this.update(delta);
-        this.render();
+        this.render();       
+
+        this.fpsCounter.update(timestamp);
 
         window.requestAnimationFrame(this.loop)
     }
 
     update = (delta: number) => {
         this.activeScene?.update(delta)
-
-        this.fpsCounter.update(delta);
     }
 
     render = () => {

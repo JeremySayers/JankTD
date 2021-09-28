@@ -6,7 +6,8 @@ class Entity {
     x: number;
     y: number;
     width: number;
-    height: number
+    height: number;
+    private visible: boolean = true;
 
     protected image: HTMLImageElement;
 
@@ -30,13 +31,21 @@ class Entity {
     update(delta: number) {}
 
     render(context: CanvasRenderingContext2D) {
-        if (this.image != null) {
+        if (this.image != null && this.visible) {
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
     }
 
-    clicked(game: Game){
-        return Sandbox.mouseCollidedWithEntity(game.mouseX, game.mouseY, this);
+    clicked(game: Game){        
+        return (this.visible && Sandbox.mouseCollidedWithEntity(game.mouseX, game.mouseY, this));
+    }
+
+    hide() {
+        this.visible = false;
+    }
+
+    show() {
+        this.visible = true;
     }
 }
 
